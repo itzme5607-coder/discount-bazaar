@@ -22,7 +22,27 @@ footer{text-align:center;padding:15px;background:#0003}
 <h2>Unbeatable Value. Every Single Day.</h2>
 </header>
 
-<section>
+<div class="card" id="deals">
+<h3>আজকের ডিল</h3>
+<p>Loading...</p>
+</div>
+
+<script>
+fetch("https://docs.google.com/spreadsheets/d/17xW1bng0x3dhWfggdBv6pHxu2S8xyTap5o0yYiKRduM/gviz/tq?tqx=out:json")
+.then(res => res.text())
+.then(data => {
+  const json = JSON.parse(data.substr(47).slice(0,-2));
+  let html = "<h3>আজকের ডিল</h3>";
+  json.table.rows.forEach(r => {
+    if(r.c[0] && r.c[1]){
+      html += `<p><strong>${r.c[0].v}</strong><br>
+      <a href="${r.c[1].v}" target="_blank">Buy Now</a> 
+      (${r.c[2]?.v || ""})</p>`;
+    }
+  });
+  document.getElementById("deals").innerHTML = html;
+});
+</script><section>
 <div class="card">
 <p>স্বাগতম Discount Bazaar-এ! আমরা আপনাদের জন্য নিয়ে আসি সেরা সব পণ্যের ওপর ৫০% থেকে ৯০% পর্যন্ত নিশ্চিত ডিসকাউন্ট।</p>
 </div>
